@@ -1,0 +1,105 @@
+/* WelcomeScreen.css */
+.welcome-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-screen h1 {
+    margin-top: 0;
+}
+
+.difficulty-selection {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.difficulty-button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.difficulty-button:hover {
+    background-color: #d5d5d5;
+    transform: translateY(-2px);
+}
+
+.difficulty-button.selected {
+    background-color: #4caf50;
+    color: white;
+}
+
+.nickname-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nickname-form label {
+    margin-bottom: 5px;
+}
+
+.nickname-input {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 300px;
+}
+
+.play-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.play-button:hover {
+    background-color: #45a049;
+}
+
+.play-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.leaderboard {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.clear-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #f44336;
+    color: white;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.clear-button:hover {
+    background-color: #e53935;
+}

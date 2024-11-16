@@ -1,0 +1,43 @@
+/* Leaderboard.css */
+.leaderboard {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.95;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.leaderboard-cleared {
+    opacity: 0;
+}
+
+.leaderboard h2 {
+    text-align: center;
+}
+
+.leaderboard table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.leaderboard th, .leaderboard td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.leaderboard tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.leaderboard tr:hover {
+    background-color: #f1f1f1;
+}
+
+.leaderboard th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #4caf50;
+    color: white;
+}
