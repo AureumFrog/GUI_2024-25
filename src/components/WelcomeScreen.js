@@ -1,4 +1,4 @@
-// WelcomeScreen.js
+// src/components/WelcomeScreen.js
 import React, { useState } from 'react';
 import Leaderboard from './Leaderboard';
 import './WelcomeScreen.css';
@@ -11,6 +11,7 @@ const WelcomeScreen = ({
                            onStartGame,
                            records,
                            onClearRecords,
+                           onStartRabbitMode, // <-- Nowa funkcja do uruchomienia trybu Wąż vs Królik
                        }) => {
     const difficulties = ['łatwy', 'średni', 'trudny'];
     const [displayCleared, setDisplayCleared] = useState(false);
@@ -53,8 +54,18 @@ const WelcomeScreen = ({
                 className={`play-button ${!nickname.trim() ? 'disabled' : ''}`}
                 disabled={!nickname.trim()}
             >
-                Graj
+                Graj (tryb jednoosobowy)
             </button>
+
+            {/* Nowy przycisk do uruchomienia trybu Wąż vs Królik */}
+            <button
+                onClick={() => onStartRabbitMode()}
+                className={`play-button ${!nickname.trim() ? 'disabled' : ''}`}
+                disabled={!nickname.trim()}
+            >
+                Wąż vs Królik
+            </button>
+
             <Leaderboard records={records} isCleared={displayCleared} />
             <button className="clear-button" onClick={handleClearRecords}>
                 Wyczyść tablicę

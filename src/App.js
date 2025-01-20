@@ -1,7 +1,8 @@
-// App.js
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import GameScreen from './components/GameScreen';
 import WelcomeScreen from './components/WelcomeScreen';
+import GameScreenVsRabbit from './components/GameScreenVsRabbit'; // Nowy plik
 import './App.css';
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
                     setRecords([]);
                 }
             } catch (error) {
-                console.error('Błąd podczas parsowania rekordów z localStorage:', error);
+                console.error('Błąd przy parsowaniu rekordów z localStorage:', error);
                 setRecords([]);
             }
         }
@@ -36,8 +37,11 @@ function App() {
         setCurrentScreen('game');
     };
 
+    const handleStartRabbitMode = () => {
+        setCurrentScreen('gameRabbit'); // <-- Nowy typ ekranu
+    };
+
     const handleBackToMenu = (finalScore, difficulty) => {
-        // Zapisujemy wynik gry przed powrotem do menu
         if (finalScore !== null && finalScore >= 0) {
             updateRecords(finalScore, difficulty);
         }
@@ -45,43 +49,39 @@ function App() {
     };
 
     const handleGameOver = (finalScore, difficulty) => {
-        // Zapisujemy wynik gry po zakończeniu
         if (finalScore !== null && finalScore >= 0) {
             updateRecords(finalScore, difficulty);
         }
     };
 
     const updateRecords = (finalScore, difficulty) => {
-        setRecords((prevRecords) => {
-            const validPrevRecords = Array.isArray(prevRecords) ? prevRecords : [];
-            const newRecord = { nickname, score: finalScore, difficulty };
+        // Stary tryb jednoosobowy
+        const validPrevRecords = Array.isArray(records) ? records : [];
+        const newRecord = { nickname, score: finalScore, difficulty };
 
-            // Sprawdzamy, czy taki sam rekord już istnieje
-            const recordExists = validPrevRecords.some(
-                (record) =>
-                    record.nickname === nickname &&
-                    record.score === finalScore &&
-                    record.difficulty === difficulty
-            );
+        const recordExists = validPrevRecords.some(
+            (record) =>
+                record.nickname === nickname &&
+                record.score === finalScore &&
+                record.difficulty === difficulty
+        );
 
-            if (recordExists) {
-                // Jeśli rekord istnieje, nie dodajemy go ponownie
-                return validPrevRecords;
-            }
+        if (recordExists) {
+            return validPrevRecords;
+        }
 
-            const updatedRecords = [
-                ...validPrevRecords,
-                newRecord,
-            ]
-                .sort((a, b) => {
-                    const difficultyMultiplier = { 'łatwy': 1, 'średni': 2, 'trudny': 3 };
-                    const aTotal = a.score * difficultyMultiplier[a.difficulty];
-                    const bTotal = b.score * difficultyMultiplier[b.difficulty];
-                    return bTotal - aTotal;
-                })
-                .slice(0, 10); // Zostawiamy tylko top 10
-            return updatedRecords;
-        });
+        const updatedRecords = [
+            ...validPrevRecords,
+            newRecord,
+        ]
+            .sort((a, b) => {
+                const difficultyMultiplier = { 'łatwy': 1, 'średni': 2, 'trudny': 3 };
+                const aTotal = a.score * difficultyMultiplier[a.difficulty];
+                const bTotal = b.score * difficultyMultiplier[b.difficulty];
+                return bTotal - aTotal;
+            })
+            .slice(0, 10);
+        setRecords(updatedRecords);
     };
 
     const handleDifficultySelect = (level) => {
@@ -101,10 +101,12 @@ function App() {
                     onDifficultySelect={handleDifficultySelect}
                     selectedDifficulty={gameSpeed}
                     onStartGame={handleStartGame}
+                    onStartRabbitMode={handleStartRabbitMode} // <-- Nowy props
                     records={records}
                     onClearRecords={handleClearRecords}
                 />
             )}
+
             {currentScreen === 'game' && (
                 <GameScreen
                     nickname={nickname}
@@ -112,6 +114,16 @@ function App() {
                     onBack={handleBackToMenu}
                     onGameOver={handleGameOver}
                     records={records}
+                />
+            )}
+
+            {/* Nowy ekran trybu Wąż vs Królik */}
+            {currentScreen === 'gameRabbit' && (
+                <GameScreenVsRabbit
+                    nickname={nickname}
+                    difficulty={gameSpeed}
+                    onBack={() => setCurrentScreen('welcome')}
+                    // Nie zapisujemy rekordów do Leaderboard
                 />
             )}
         </div>
